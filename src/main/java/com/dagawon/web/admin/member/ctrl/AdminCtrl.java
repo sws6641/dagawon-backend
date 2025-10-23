@@ -1,20 +1,16 @@
 package com.dagawon.web.admin.member.ctrl;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 //import org.apache.logging.log4j.core.config.plugins.validation.constraints.Required;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 //@Tag(name = "01. 회원", description = "회원 API")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class MemberCtrl {
+public class AdminCtrl {
 
 //    private final MemberSvc memberSvc;
 //    private final CustomeModelMapper customeModelMapper;
