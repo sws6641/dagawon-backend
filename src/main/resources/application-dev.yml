@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    driver-class-name: com.mariadb.cj.jdbc.Driver
+    url: jdbc:mariadb://dagawon-db.cveq0qssip2p.ap-northeast-2.rds.amazonaws.com:3306/dagawon_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: admin
+    password: Gotsla12
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 300000
+      max-lifetime: 1800000
+      connection-timeout: 3000
+      validation-timeout: 2000
+      leak-detection-threshold: 20000
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+    open-in-view: false
+
+logging:
+  level:
+    root: info
+    org.hibernate.SQL: warn
+    org.springframework.web: info
