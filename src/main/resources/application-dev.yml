@@ -14,12 +14,20 @@ spring:
       leak-detection-threshold: 20000
 
   jpa:
+    database: mysql
+    generate-ddl: false #spring.jpa.hibernate.ddl-auto 속성을 사용할지 말지를 결정하는 옵션 false : 사용안함 true : 사용
+    open-in-view: false
+    show-sql: true
     hibernate:
       ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl  # 테이블명 대문자로 변경
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MariaDBDialect
-    open-in-view: false
+        format_sql: true
+        show_sql: false
+        highlight_sql: true
+        use_sql_comments: true
 
 logging:
   level:
