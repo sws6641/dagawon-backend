@@ -58,6 +58,9 @@ spring:
     packages-to-scan: com.dagawon.web
     show-actuator: true
 
+  application:
+    name: "DAGAWON"
+
 
 
 
