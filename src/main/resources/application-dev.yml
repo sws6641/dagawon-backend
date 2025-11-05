@@ -1,6 +1,6 @@
 spring:
   datasource:
-    driver-class-name: com.mariadb.cj.jdbc.Driver
+    driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://dagawon-db.cveq0qssip2p.ap-northeast-2.rds.amazonaws.com:3306/dagawon_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: admin
     password: Gotsla12

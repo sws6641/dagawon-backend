@@ -56,7 +56,7 @@ public class SecurityConfig {
                     var config = new CorsConfiguration();
                     config.setAllowedOrigins(List.of(
                             "https://localhost:4000",
-                            "http://localhost:8071",
+                            "http://localhost:8080",
                             "https://appkoserdev.kosapp.co.kr",
                             "https://adminkoserdev.kosapp.co.kr",
                             "https://apikoserdev.kosapp.co.kr",
