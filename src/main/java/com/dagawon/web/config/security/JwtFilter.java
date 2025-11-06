@@ -1,5 +1,7 @@
 package com.dagawon.web.config.security;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,46 +36,46 @@ public class JwtFilter extends OncePerRequestFilter {
 
         log.debug("**** SECURITY FILTER > {}", request.getRequestURL());
 
-//        String token = jwtUtil.extractToken(request.getHeader("Authorization"));
-//
-//        if (token != null) {
-//            try {
-//                // accessToken 검증
-//                Claims claims = jwtUtil.validateToken(token);
-//                setAuthenticateUser(claims);
-//            } catch (ExpiredJwtException e) {
-//                // accessToken 만료시 refreshToken 검증, 새 accessToken 발급
-//                String refreshToken = jwtUtil.getRefreshTokenFromCookie(request);
-//
-//                if (jwtUtil.validateRefreshToken(refreshToken)) {
-//                    Claims claims = jwtUtil.getNewAccessToken(refreshToken, response);
-//                    setAuthenticateUser(claims);
-//                } else {
-//                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "만료 된 Refresh Token");
-//                    return;
-//                }
-//            } catch (Exception e) {
-//                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "유효하지 않은 Access Token");
-//                return;
-//            }
-//        }
+        String token = jwtUtil.extractToken(request.getHeader("Authorization"));
+
+        if (token != null) {
+            try {
+                // accessToken 검증
+                Claims claims = jwtUtil.validateToken(token);
+                setAuthenticateUser(claims);
+            } catch (ExpiredJwtException e) {
+                // accessToken 만료시 refreshToken 검증, 새 accessToken 발급
+                String refreshToken = jwtUtil.getRefreshTokenFromCookie(request);
+
+                if (jwtUtil.validateRefreshToken(refreshToken)) {
+                    Claims claims = jwtUtil.getNewAccessToken(refreshToken, response);
+                    setAuthenticateUser(claims);
+                } else {
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "만료 된 Refresh Token");
+                    return;
+                }
+            } catch (Exception e) {
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "유효하지 않은 Access Token");
+                return;
+            }
+        }
         filterChain.doFilter(request, response);
     }
 
     /**
      * 유효한 Access Token으로 사용자 인증 처리
      */
-//    private void setAuthenticateUser(Claims claims) {
-//        String loginId = claims.get(LOGIN_ID, String.class);
-//        String membNo = claims.get(MEMB_NO, String.class);
-//        String membNm = claims.get(MEMB_NM, String.class);
-//        String bizNo = claims.get(BIZ_NO, String.class);
-//
+    private void setAuthenticateUser(Claims claims) {
+        String loginId = claims.get(LOGIN_ID, String.class);
+        String membNo = claims.get(MEMB_NO, String.class);
+        String membNm = claims.get(MEMB_NM, String.class);
+        String bizNo = claims.get(BIZ_NO, String.class);
+
 //        UserPrincipal userPrincipal = new UserPrincipal(loginId, membNo, membNm, bizNo);
-//
-//        // SecurityContext에 사용자 정보를 설정
+
+        // SecurityContext에 사용자 정보를 설정
 //        SecurityContextHolder.getContext().setAuthentication(
 //                new UsernamePasswordAuthenticationToken(userPrincipal, null, new ArrayList<>())
 //        );
-//    }
+    }
 }

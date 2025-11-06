@@ -1,5 +1,6 @@
 package com.dagawon.web.config.security;
 
+import com.dagawon.web.common.vo.ResData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -42,7 +43,7 @@ public class CustomAuthenticationEntryPoint  implements AuthenticationEntryPoint
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         OutputStream responseStream = response.getOutputStream();
         ObjectMapper mapper = new ObjectMapper();
-//        mapper.writeValue(responseStream, ResData.builder().code(String.valueOf(HttpStatus.UNAUTHORIZED.value())).msg(resultMsg).build());
+        mapper.writeValue(responseStream, ResData.builder().code(String.valueOf(HttpStatus.UNAUTHORIZED.value())).msg(resultMsg).build());
         responseStream.flush();
         //  errorSaveUtil.errorSave( request,  authException);
     }
