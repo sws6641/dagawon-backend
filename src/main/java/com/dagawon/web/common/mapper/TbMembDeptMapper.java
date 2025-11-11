@@ -6,10 +6,7 @@ import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, uses = {TbMembMapper.class, TbDeptMapper.class, TbPositionMapper.class})
-public interface TbMembDeptMapper {
-    TbMembDept toEntity(TbMembDeptDto tbMembDeptDto);
-
-    TbMembDeptDto toDto(TbMembDept tbMembDept);
+public interface TbMembDeptMapper extends DefaultMapper<TbMembDeptDto, TbMembDept> {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     TbMembDept partialUpdate(TbMembDeptDto tbMembDeptDto, @MappingTarget TbMembDept tbMembDept);
