@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -24,7 +25,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class JwtUtil {
 
-//    @Value("${app.auth.token-secret}")
+    @Value("${app.auth.token-secret}")
     private String secret;
     private static final Long ACCESS_TOKEN_EXPIRATION_TIME = 200L * 24 * 60 * 60 * 1000;    // 200일
     private static final Long REFRESH_TOKEN_EXPIRATION_TIME = 365L * 24 * 60 * 60 * 1000;   // 365일
@@ -156,7 +157,7 @@ public class JwtUtil {
 
         LoginVo.TokenReq tokenReq = LoginVo.TokenReq.builder()
                 .loginId(claims.get(LOGIN_ID, String.class))
-                .membNo(claims.get(MEMB_NO, String.class))
+                .membNo(claims.get(MEMB_NO, Long.class))
                 .membNm(claims.get(MEMB_NM, String.class))
                 .bizNo(claims.get(BIZ_NO, String.class))
                 .build();

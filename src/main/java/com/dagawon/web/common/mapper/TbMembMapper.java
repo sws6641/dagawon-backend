@@ -3,7 +3,6 @@ package com.dagawon.web.common.mapper;
 import com.dagawon.web.common.dto.TbMembDto;
 import com.dagawon.web.common.entity.TbMemb;
 import org.mapstruct.*;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, uses = {TbCompanyMapper.class})
 public interface TbMembMapper {
@@ -14,5 +13,5 @@ public interface TbMembMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     TbMemb partialUpdate(TbMembDto tbMembDto, @MappingTarget TbMemb tbMemb);
 
-    TbMembMapper INSTANCE = Mappers.getMapper(TbMembMapper.class);
+//    TbMembMapper INSTANCE = Mappers.getMapper(TbMembMapper.class);
 }

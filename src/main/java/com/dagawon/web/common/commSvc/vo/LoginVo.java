@@ -14,11 +14,11 @@ public class LoginVo {
     @AllArgsConstructor
     public static class LoginReq {
         @NotEmpty(message = "ID는 필수 항목입니다.")
-        @Schema(name = "id", example = "sbsh")
+        @Schema(name = "id", example = "sws6641")
         String id;
 
         @NotEmpty(message = "PASSWORD는 필수 항목입니다.")
-        @Schema(name = "pwd", example = "sbsh")
+        @Schema(name = "pwd", example = "1234")
         String pwd;
 
         @NotEmpty(message = "구분 코드는 필수 항목입니다.")
@@ -80,7 +80,7 @@ public class LoginVo {
     @AllArgsConstructor
     public static class TokenReq {
         String loginId;
-        String membNo;
+        Long membNo;
         String membNm;
         String bizNo;
     }
@@ -93,7 +93,7 @@ public class LoginVo {
     public static class PwdChgReq {
         @NotEmpty(message = "membNo는 필수 항목입니다.")
         @Schema(name = "membNo", example = "20250403003")
-        String membNo;
+        Long membNo;
 
         @NotEmpty(message = "PASSWORD는 필수 항목입니다.")
         @Schema(name = "pwd", example = "mng12345")

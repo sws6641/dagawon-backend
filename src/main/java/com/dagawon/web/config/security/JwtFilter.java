@@ -1,5 +1,6 @@
 package com.dagawon.web.config.security;
 
+import com.dagawon.web.common.userAuth.UserPrincipal;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
@@ -67,15 +68,15 @@ public class JwtFilter extends OncePerRequestFilter {
      */
     private void setAuthenticateUser(Claims claims) {
         String loginId = claims.get(LOGIN_ID, String.class);
-        String membNo = claims.get(MEMB_NO, String.class);
+        Long membNo = claims.get(MEMB_NO, Long.class);
         String membNm = claims.get(MEMB_NM, String.class);
-        String bizNo = claims.get(BIZ_NO, String.class);
+        Long bizNo = claims.get(BIZ_NO, Long.class);
 
-//        UserPrincipal userPrincipal = new UserPrincipal(loginId, membNo, membNm, bizNo);
+        UserPrincipal userPrincipal = new UserPrincipal(loginId, membNo, membNm, bizNo);
 
         // SecurityContext에 사용자 정보를 설정
-//        SecurityContextHolder.getContext().setAuthentication(
-//                new UsernamePasswordAuthenticationToken(userPrincipal, null, new ArrayList<>())
-//        );
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken(userPrincipal, null, new ArrayList<>())
+        );
     }
 }

@@ -1,71 +1,75 @@
+app:
+    auth:
+        token-secret: asiudhfnlkjqwengoiuasdbvihjashdfiowqeujbnkjashdfnklwajqebriajsbvkjsabvAESFhuiwqapenfjkasd
+
 spring:
-  datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://dagawon-db.cveq0qssip2p.ap-northeast-2.rds.amazonaws.com:3306/dagawon_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: admin
-    password: Gotsla12
-    hikari:
-      maximum-pool-size: 10
-      minimum-idle: 5
-      idle-timeout: 300000
-      max-lifetime: 1800000
-      connection-timeout: 3000
-      validation-timeout: 2000
-      leak-detection-threshold: 20000
+    datasource:
+        driver-class-name: org.mariadb.jdbc.Driver
+        url: jdbc:mariadb://dagawon-db.cveq0qssip2p.ap-northeast-2.rds.amazonaws.com:3306/dagawon_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+        username: admin
+        password: Gotsla12
+        hikari:
+            maximum-pool-size: 10
+            minimum-idle: 5
+            idle-timeout: 300000
+            max-lifetime: 1800000
+            connection-timeout: 3000
+            validation-timeout: 2000
+            leak-detection-threshold: 20000
 
-  jpa:
-    database: mysql
-    generate-ddl: false #spring.jpa.hibernate.ddl-auto 속성을 사용할지 말지를 결정하는 옵션 false : 사용안함 true : 사용
-    open-in-view: false
-    show-sql: true
-    hibernate:
-      ddl-auto: none
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl  # 테이블명 대문자로 변경
-    properties:
-      hibernate:
-        format_sql: true
-        show_sql: false
-        highlight_sql: true
-        use_sql_comments: true
+    jpa:
+        database: mysql
+        generate-ddl: false #spring.jpa.hibernate.ddl-auto 속성을 사용할지 말지를 결정하는 옵션 false : 사용안함 true : 사용
+        open-in-view: false
+        show-sql: true
+        hibernate:
+            ddl-auto: none
+            naming:
+                physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl  # 테이블명 대문자로 변경
+        properties:
+            hibernate:
+                format_sql: true
+                show_sql: false
+                highlight_sql: true
+                use_sql_comments: true
 
 
-  springdoc:
-    default-consumes-media-type: application/json
-    default-produces-media-type: application/json
-    api-docs:
-      groups:
-        enabled: true
-      path: /api-docs
-      enabled: true
-    cache:
-      disabled: true # swagger cache 설정
-    swagger-ui:
-      config-url: /api/api-docs/swagger-config
-      url: /api/api-docs
-      operations-sorter: method # alpha(알파벳 오름차순), method(HTTP메소드순)
-      tags-sorter: alpha # 태그 정렬 기준
-      path: /swagger-ui.html # html 문서 접속 경로
-      disable-swagger-default-url: true
-      #   display-query-params-without-oauth2: true
-      doc-expansion: none # tag, operation 펼치는 방식 ["list", "full", "none"]
-      display-request-duration: true
-      persist-authorization: true
-      syntax-highlight:
-        theme: "obsidian" # "arta">회/노 "obsidian">흰/주
-    paths-to-match: # OpenAPI 3 로 문서화할 api path 리스트
-      - /**
-    packages-to-scan: com.dagawon.web
-    show-actuator: true
+    springdoc:
+        default-consumes-media-type: application/json
+        default-produces-media-type: application/json
+        api-docs:
+            groups:
+                enabled: true
+            path: /api-docs
+            enabled: true
+        cache:
+            disabled: true # swagger cache 설정
+        swagger-ui:
+            config-url: /api/api-docs/swagger-config
+            url: /api/api-docs
+            operations-sorter: method # alpha(알파벳 오름차순), method(HTTP메소드순)
+            tags-sorter: alpha # 태그 정렬 기준
+            path: /swagger-ui.html # html 문서 접속 경로
+            disable-swagger-default-url: true
+            #   display-query-params-without-oauth2: true
+            doc-expansion: none # tag, operation 펼치는 방식 ["list", "full", "none"]
+            display-request-duration: true
+            persist-authorization: true
+            syntax-highlight:
+                theme: "obsidian" # "arta">회/노 "obsidian">흰/주
+        paths-to-match: # OpenAPI 3 로 문서화할 api path 리스트
+            - /**
+        packages-to-scan: com.dagawon.web
+        show-actuator: true
 
-  application:
-    name: "DAGAWON"
+    application:
+        name: "DAGAWON"
 
 
 
 
 logging:
-  level:
-    root: info
-    org.hibernate.SQL: warn
-    org.springframework.web: info
+    level:
+        root: info
+        org.hibernate.SQL: warn
+        org.springframework.web: info

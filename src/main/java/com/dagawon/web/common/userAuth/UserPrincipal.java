@@ -2,7 +2,6 @@ package com.dagawon.web.common.userAuth;
 
 
 import com.dagawon.web.common.dto.TbMembDto;
-import com.dagawon.web.common.repo.TbMembRepository;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,13 +16,13 @@ public class UserPrincipal implements UserDetails {
     @Getter
     private final String loginId;
     @Getter
-    private final String membNo;
+    private final Long membNo;
     @Getter
     private final String membNm;
     @Getter
-    private final String bizNo;
+    private final Long bizNo;
 
-    public UserPrincipal(String loginId, String membNo, String membNm, String bizNo) {
+    public UserPrincipal(String loginId, Long membNo, String membNm, Long bizNo) {
         this.loginId = loginId;
         this.membNo = membNo;
         this.membNm = membNm;
@@ -35,20 +34,19 @@ public class UserPrincipal implements UserDetails {
         return Collections.emptyList();  // 권한이 필요하지 않다면 빈 리스트를 반환
     }
 
-    // TODO: 데이터베이스 필드에 맞게 수정 필요
     public static UserPrincipal create(TbMembDto user) {
         return new UserPrincipal(
                 user.getMembId(),
-                user.getMembId(),
+                user.getMembNo(),
                 user.getMembNm(),
-                user.getMembNm());
+                user.getBizNo().getBizNo());
     }
 
     public String getId() {
         return loginId;
     }
 
-    public String getMembNo() {
+    public Long getMembNo() {
         return membNo;
     }
 
@@ -57,7 +55,7 @@ public class UserPrincipal implements UserDetails {
         return membNm;
     }
 
-    public String getBizNo() {
+    public Long getBizNo() {
         return bizNo;
     }
 
