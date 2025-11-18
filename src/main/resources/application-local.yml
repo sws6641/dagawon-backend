@@ -63,6 +63,15 @@ spring:
     application:
         name: "DAGAWON"
 
+    mail:
+        host: smtp.gmail.com
+        port: 587
+        username: dagaone123@gmail.com
+        password: nmakgxsjkmotqkpk
+        properties:
+            mail.smtp.auth: true
+            mail.smtp.starttls.enable: true
+
 
 
 
