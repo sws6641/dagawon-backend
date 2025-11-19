@@ -19,13 +19,16 @@ public class TbTerms extends BaseTimeEntity {
     @Column(name = "TERMS_ID", nullable = false)
     private Long termsId;
 
+    @Column(name = "USAGE_PLACE", nullable = false, length = 50)
+    private String usagePlace;
+
     @Column(name = "TERMS_CODE", nullable = false, length = 50)
     private String termsCode;
 
     @Column(name = "VERSION", nullable = false, length = 10)
     private String version;
 
-    @Column(name = "TITLE", nullable = false, length = 200)
+    @Column(name = "TITLE", nullable = false, length = 100)
     private String title;
 
     @Column(name = "CONTENT", nullable = false, columnDefinition = "TEXT")
