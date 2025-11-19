@@ -1,13 +1,17 @@
 app:
     auth:
-        token-secret: asiudhfnlkjqwengoiuasdbvihjashdfiowqeujbnkjashdfnklwajqebriajsbvkjsabvAESFhuiwqapenfjkasd
+        token-secret: ${app.auth.token-secret}
 
 spring:
+    config:
+        activate:
+            on-profile: local
+        import: application-secret.yml
     datasource:
         driver-class-name: org.mariadb.jdbc.Driver
         url: jdbc:mariadb://dagawon-db.cveq0qssip2p.ap-northeast-2.rds.amazonaws.com:3306/dagawon_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-        username: admin
-        password: Gotsla12
+        username: ${spring.datasource.username}
+        password: ${spring.datasource.password}
         hikari:
             maximum-pool-size: 5
             minimum-idle: 2
@@ -66,8 +70,8 @@ spring:
     mail:
         host: smtp.gmail.com
         port: 587
-        username: dagaone123@gmail.com
-        password: nmakgxsjkmotqkpk
+        username: ${secret.mail.username}
+        password: ${secret.mail.password}
         properties:
             mail.smtp.auth: true
             mail.smtp.starttls.enable: true
