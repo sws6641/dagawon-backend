@@ -1,7 +1,7 @@
-package com.dagawon.web.common.ctrl;
+package com.dagawon.web.common.auth.login.ctrl;
 
-import com.dagawon.web.common.commSvc.LoginSvc;
-import com.dagawon.web.common.commSvc.vo.LoginVo;
+import com.dagawon.web.common.auth.login.svc.LoginSvc;
+import com.dagawon.web.common.auth.login.vo.LoginVo;
 import com.dagawon.web.common.vo.ResData;
 import com.dagawon.web.config.exception.BadRequestException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -53,7 +53,7 @@ public class LoginCtrl {
     @PostMapping(value = "/auth/login")
     public ResponseEntity<?> loginCtrl(@RequestBody LoginVo.LoginReq loginReqVo, HttpServletResponse response) throws Exception {
 
-        log.debug(" ===== 신협 로그인 : {} ===== ", loginReqVo.getId());
+        log.debug(" ===== 다가원 로그인 : {} ===== ", loginReqVo.getId());
 
         LoginVo.LoginRes outSvo = loginSvc.getLogin(loginReqVo, response);
 

@@ -1,6 +1,6 @@
-package com.dagawon.web.common.commSvc;
+package com.dagawon.web.common.auth.login.svc;
 
-import com.dagawon.web.common.commSvc.vo.LoginVo;
+import com.dagawon.web.common.auth.login.vo.LoginVo;
 import com.dagawon.web.common.dto.TbMembDto;
 import com.dagawon.web.common.entity.TbMemb;
 import com.dagawon.web.common.mapper.TbMembMapper;

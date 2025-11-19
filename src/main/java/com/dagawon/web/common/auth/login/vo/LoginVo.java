@@ -1,4 +1,4 @@
-package com.dagawon.web.common.commSvc.vo;
+package com.dagawon.web.common.auth.login.vo;
 
 import com.dagawon.web.common.annotation.NullToEmptyString;
 import io.swagger.v3.oas.annotations.media.Schema;
