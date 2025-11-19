@@ -25,11 +25,15 @@ public class TbTermsDto implements Serializable {
     private String termsCode;
 
     @NotNull
+    @Size(max = 50)
+    private String usagePlace;
+
+    @NotNull
     @Size(max = 10)
     private String version;
 
     @NotNull
-    @Size(max = 200)
+    @Size(max = 100)
     private String title;
 
     @NotNull
