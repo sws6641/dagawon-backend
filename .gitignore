@@ -35,3 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Secret config files ###
+# Git에 올라가면 안 되는 비밀 설정 파일
+src/main/resources/application-secret.yml
+
