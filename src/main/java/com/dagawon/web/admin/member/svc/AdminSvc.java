@@ -51,6 +51,10 @@ public class AdminSvc {
         return exists ? "00" : "01";
     }
 
+    /**
+     * 회원정보 저장
+     *
+     **/
     @Transactional
     public String crtMembers(AdminVo.CrtMembReq crtMembReqVo) {
 
@@ -72,6 +76,9 @@ public class AdminSvc {
 //                .rankCd(crtMembReqVo.getRankCd())
 //                .empNo(empNo)
 //                .build();
+
+        // TODO: 부서코드는 memb_dept 테이블에 저장해야함(dept_no) -> 부서코드 리스트는 dept 테이블에 같은 사업자로 존재
+        // TODO: 직급코드는 memb_dept 테이블에 저장해야함(position_no) -> 직급 리스트는 position 테이블에 같은 사업자로 존재
 
         // 4. 저장
 //        tbMembRepository.save(tbMembMapper.toEntity(dto));
