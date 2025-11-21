@@ -1,6 +1,7 @@
 package com.dagawon.web.common.auth.pwd.ctrl;
 
 import com.dagawon.web.common.auth.pwd.svc.PwdSvc;
+import com.dagawon.web.common.auth.pwd.vo.PwdVo;
 import com.dagawon.web.common.vo.ResData;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -8,10 +9,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -29,11 +33,10 @@ public class PwdCtrl {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "비빌번호 찾기 인증코드 메일 발송 성공", content = @Content(schema = @Schema(implementation = String.class))),
     })
-    @GetMapping(value =  PWD_API_BASE_PATH +"/send-code")
-    public ResponseEntity<?> sendAuthCodeMail() {
+    @PostMapping(value =  PWD_API_BASE_PATH +"/send-code")
+    public ResponseEntity<?> sendAuthCodeMail(@RequestBody @Valid PwdVo.SendAuthCodeMailReq req) {
         try{
-
-            pwdSvc.sendAuthCodeMail();
+            pwdSvc.sendAuthCodeMail(req);
             return ResData.SUCCESS("01", "해당 아이디로 가입이 가능합니다.");
 
         }catch (Exception e){
