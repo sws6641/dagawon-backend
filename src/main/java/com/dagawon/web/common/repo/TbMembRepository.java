@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface TbMembRepository extends JpaRepository<TbMemb, Long> {
+    Optional<TbMemb> findByMembNo(Long membNo);
+
     Optional<TbMemb> findByMembId(String membId);
 
     Boolean existsByMembIdAndBizNo_BizNo(String membId, Long bizNo);
