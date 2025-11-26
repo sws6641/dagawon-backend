@@ -2,9 +2,12 @@ package com.dagawon.web.admin.member.svc;
 
 
 import com.dagawon.web.admin.member.vo.AdminVo;
-import com.dagawon.web.common.mapper.TbMembMapper;
-import com.dagawon.web.common.repo.TbMembRepository;
+import com.dagawon.web.common.dto.*;
+import com.dagawon.web.common.entity.*;
+import com.dagawon.web.common.mapper.*;
+import com.dagawon.web.common.repo.*;
 import com.dagawon.web.common.util.CustomeModelMapper;
+import com.dagawon.web.config.exception.DefaultException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,10 +21,18 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class AdminSvc {
 
+    private final TbDeptMapper tbDeptMapper;
     private final TbMembMapper tbMembMapper;
+    private final TbCompanyMapper tbCompanyMapper;
+    private final TbMembDeptMapper tbMembDeptMapper;
+    private final TbPositionMapper tbPositionMapper;
     private final CustomeModelMapper customeModelMapper;
 
+    private final TbDeptRepository tbDeptRepository;
     private final TbMembRepository tbMembRepository;
+    private final TbCompanyRepository tbCompanyRepository;
+    private final TbMembDeptRepository tbMembDeptRepository;
+    private final TbPositionRepository tbPositionRepository;
 
 
 //    /**
@@ -67,21 +78,61 @@ public class AdminSvc {
         // TODO: 사번 생성은 프로시저 사용?
         // 2. 사번 생성
 //        String empNo = generateEmpNo();
+        Long membNo = 202511240001L;
+
+        // 사업자 정보 조회
+        TbCompany tbCompany = tbCompanyRepository.findById(crtMembReqVo.getBizNo())
+                .orElseThrow(() -> new DefaultException("회사 정보를 찾을 수 없습니다. "));
+        TbCompanyDto tbCompanyDto = tbCompanyMapper.toDto(tbCompany);
+
 
         // 3. DTO 생성
-//        TbMembDto dto = TbMembDto.builder()
-//                .membNm(crtMembReqVo.getUserName())
-//                .membEmail(crtMembReqVo.getEmailId())
-//                .deptCd(crtMembReqVo.getDeptCd())
-//                .rankCd(crtMembReqVo.getRankCd())
-//                .empNo(empNo)
-//                .build();
+        TbMembDto tbMembDto = TbMembDto.builder()
+                .membNo(membNo)
+                .bizNo(crtMembReqVo.getBizNo())
+                .membNm(crtMembReqVo.getMembNm())
+                .membEmail(crtMembReqVo.getMembEmail())
+                .membPwd("1234")
+                .roleCd("USER")
+                .statCd("ACTIVE")
+                .isAdminYn("N")
+                .build();
+
+        TbMemb tbMemb = tbMembMapper.toEntity(tbMembDto);
+        tbMemb.setBizNo(tbCompany);
+
+        TbMemb membEntity = tbMembRepository.save(tbMemb);
+
+        // 부서코드 정보 조회
+        TbDept tbDept = tbDeptRepository.findById(crtMembReqVo.getDeptCd())
+                .orElseThrow(() -> new DefaultException("부서코드 정보를 찾을 수 없습니다. "));
+        TbDeptDto tbDeptDto = tbDeptMapper.toDto(tbDept);
+
+        // 직급 정보 조회
+        TbPosition tbPosition = tbPositionRepository.findById(crtMembReqVo.getDeptCd())
+                .orElseThrow(() -> new DefaultException("직급 정보를 찾을 수 없습니다. "));
+        TbPositionDto tbPositionDto = tbPositionMapper.toDto(tbPosition);
+
+        // 5. TbMembDeptDto 생성
+        TbMembDeptDto deptDto = TbMembDeptDto.builder()
+                .membNo(tbMembMapper.toDto(membEntity))
+                .deptNo(tbDeptDto)
+                .positionNo(tbPositionDto)
+                .mainYn("N")
+                .roleCd("USER")
+                .useYn("Y")
+                .statCd("NORMAL")
+                .build();
+
+        // 6. DTO → 엔티티 변환 후 저장
+        TbMembDept membDeptEntity = tbMembDeptMapper.toEntity(deptDto);
+        tbMembDeptRepository.save(membDeptEntity);
+
 
         // TODO: 부서코드는 memb_dept 테이블에 저장해야함(dept_no) -> 부서코드 리스트는 dept 테이블에 같은 사업자로 존재
         // TODO: 직급코드는 memb_dept 테이블에 저장해야함(position_no) -> 직급 리스트는 position 테이블에 같은 사업자로 존재
 
         // 4. 저장
-//        tbMembRepository.save(tbMembMapper.toEntity(dto));
 
 //        return empNo;   // 생성된 사번 반환
         return "";   // 생성된 사번 반환
