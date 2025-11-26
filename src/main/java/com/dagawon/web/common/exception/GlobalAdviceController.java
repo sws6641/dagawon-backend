@@ -1,12 +1,12 @@
 package com.dagawon.web.common.exception;
 
-import com.bankle.common.utils.ErrorSaveUtil;
-import com.bankle.common.vo.ResData;
-import com.google.protobuf.ServiceException;
+
+import com.dagawon.web.common.vo.ResData;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
