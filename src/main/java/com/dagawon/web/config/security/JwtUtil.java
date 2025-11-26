@@ -1,7 +1,13 @@
 package com.dagawon.web.config.security;
 
-import com.dagawon.web.common.commSvc.vo.LoginVo;
-import io.jsonwebtoken.*;
+
+import com.dagawon.web.common.auth.login.vo.LoginVo;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.Cookie;
