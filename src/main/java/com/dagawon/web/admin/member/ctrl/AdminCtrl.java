@@ -1,6 +1,7 @@
 package com.dagawon.web.admin.member.ctrl;
 
 import com.dagawon.web.admin.member.svc.AdminSvc;
+import com.dagawon.web.admin.member.vo.AdminVo;
 import com.dagawon.web.common.vo.ResData;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -75,6 +76,20 @@ public class AdminCtrl {
         }
     }
 
+    @Operation(summary = "회원정보 저장", description = "")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "회원정보 저장 성공", content = @Content(schema = @Schema(implementation = String.class))),
+    })
+    @PostMapping(value =  ADMIN_API_BASE_PATH +"/members")
+    public ResponseEntity<?> searchDuplicateAccount(@RequestBody AdminVo.CrtMembReq crtMembReqVo) {
+        try{
+            String result = adminSvc.crtMembers(crtMembReqVo);
+            return ResData.SUCCESS(result);
+
+        }catch (Exception e){
+            return ResData.FAIL("회원정보 저장 실패" , e.getMessage());
+        }
+    }
 
 
 }
