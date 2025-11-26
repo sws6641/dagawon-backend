@@ -33,7 +33,7 @@ public class PwdSvc {
     @Transactional
     public void sendAuthCodeMail(PwdVo.SendAuthCodeMailReq req) throws Exception {
 
-        Optional<TbMemb> tbMemb = tbMembRepository.findByMembId(req.getMembId());
+        Optional<TbMemb> tbMemb = tbMembRepository.findByMembEmail(req.getMembId());
 
         if (tbMemb.isEmpty()) {
             throw new BadRequestException("회원정보가 존재하지 않습니다.");
@@ -41,7 +41,7 @@ public class PwdSvc {
 
         TbMembDto tbMembDto = tbMembMapper.toDto(tbMemb.get());
 
-        if (!StringUtils.hasText(tbMembDto.getMembEmail())) {
+        if (!StringUtils.hasText(tbMembDto.getMembExtEmail())) {
             throw new BadRequestException("회원정보에 이메일이 존재하지 않습니다.");
         }
 
@@ -107,7 +107,7 @@ public class PwdSvc {
             </html>
             """.formatted(authNum);
 
-        mailSvc.sendHtmlMail(tbMembDto.getMembEmail(), subject, html);
+        mailSvc.sendHtmlMail(tbMembDto.getMembExtEmail(), subject, html);
     }
 
 }

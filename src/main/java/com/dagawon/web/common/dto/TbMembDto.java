@@ -27,12 +27,12 @@ public class TbMembDto implements Serializable {
     TbCompanyDto bizNo;
     @NotNull
     @Size(max = 50)
-    String membId;
+    String membEmail;
     @NotNull
     @Size(max = 50)
     String membNm;
     @Size(max = 100)
-    String membEmail;
+    String membExtEmail;
     @Size(max = 20)
     String membPhone;
     @NotNull

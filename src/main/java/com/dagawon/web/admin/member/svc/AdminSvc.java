@@ -58,7 +58,7 @@ public class AdminSvc {
      *
     **/
     public String getDuplicateAccount(String membId, Long bizNo) throws Exception {
-        boolean exists = tbMembRepository.existsByMembIdAndBizNo_BizNo(membId, bizNo);
+        boolean exists = tbMembRepository.existsByMembEmailAndBizNo_BizNo(membId, bizNo);
         return exists ? "00" : "01";
     }
 
@@ -89,7 +89,7 @@ public class AdminSvc {
         // 3. DTO 생성
         TbMembDto tbMembDto = TbMembDto.builder()
                 .membNo(membNo)
-                .bizNo(crtMembReqVo.getBizNo())
+//                .bizNo(crtMembReqVo.getBizNo())
                 .membNm(crtMembReqVo.getMembNm())
                 .membEmail(crtMembReqVo.getMembEmail())
                 .membPwd("1234")

@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface TbMembRepository extends JpaRepository<TbMemb, Long> {
     Optional<TbMemb> findByMembNo(Long membNo);
 
-    Optional<TbMemb> findByMembId(String membId);
+    Optional<TbMemb> findByMembEmail(String membId);
 
-    Boolean existsByMembIdAndBizNo_BizNo(String membId, Long bizNo);
+    Boolean existsByMembEmailAndBizNo_BizNo(String membId, Long bizNo);
 }

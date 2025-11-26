@@ -70,7 +70,7 @@ public class LoginSvc {
         //------------------------------------------------------------------
         // 회원 조회
         //------------------------------------------------------------------
-        Optional<TbMemb> tbMemb = tbMembRepository.findByMembId(loginId);
+        Optional<TbMemb> tbMemb = tbMembRepository.findByMembEmail(loginId);
         if (tbMemb.isPresent()) {
             TbMembDto tbMembDto = tbMembMapper.toDto(tbMemb.get());
             Long membNo = tbMembDto.getMembNo();

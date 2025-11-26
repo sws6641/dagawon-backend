@@ -36,7 +36,7 @@ public class UserPrincipal implements UserDetails {
 
     public static UserPrincipal create(TbMembDto user) {
         return new UserPrincipal(
-                user.getMembId(),
+                user.getMembEmail(),
                 user.getMembNo(),
                 user.getMembNm(),
                 user.getBizNo().getBizNo());

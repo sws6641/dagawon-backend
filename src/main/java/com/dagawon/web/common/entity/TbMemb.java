@@ -27,8 +27,8 @@ public class TbMemb extends BaseTimeEntity {
 
     @Size(max = 50)
     @NotNull
-    @Column(name = "MEMB_ID", nullable = false, length = 50)
-    private String membId;
+    @Column(name = "MEMB_EMAIL", nullable = false, length = 50)
+    private String membEmail;
 
     @Size(max = 50)
     @NotNull
@@ -36,8 +36,8 @@ public class TbMemb extends BaseTimeEntity {
     private String membNm;
 
     @Size(max = 100)
-    @Column(name = "MEMB_EMAIL", length = 100)
-    private String membEmail;
+    @Column(name = "MEMB_EXT_EMAIL", length = 100)
+    private String membExtEmail;
 
     @Size(max = 20)
     @Column(name = "MEMB_PHONE", length = 20)
