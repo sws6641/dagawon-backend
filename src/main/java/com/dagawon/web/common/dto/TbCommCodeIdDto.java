@@ -1,15 +1,21 @@
-package com.dagawon.web.common.entity;
+package com.dagawon.web.common.dto;
 
+import com.dagawon.web.common.entity.TbCommCodeId;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Value;
+import lombok.*;
 
 import java.io.Serializable;
 
 /**
  * DTO for {@link TbCommCodeId}
  */
-@Value
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class TbCommCodeIdDto implements Serializable {
     @NotNull
     @Size(max = 30)

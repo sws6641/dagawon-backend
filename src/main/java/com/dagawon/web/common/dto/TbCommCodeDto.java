@@ -1,9 +1,8 @@
 package com.dagawon.web.common.dto;
 
-import com.dagawon.web.common.entity.TbCommCodeIdDto;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Value;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -11,7 +10,12 @@ import java.time.LocalDateTime;
 /**
  * DTO for {@link com.dagawon.web.common.entity.TbCommCode}
  */
-@Value
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class TbCommCodeDto implements Serializable {
     LocalDateTime crtDtm;
     String crtMembNo;

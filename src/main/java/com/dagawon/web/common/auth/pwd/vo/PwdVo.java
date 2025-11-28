@@ -12,8 +12,8 @@ public class PwdVo {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class SendAuthCodeMailReq {
-        @NotEmpty(message = "ID는 필수 항목입니다.")
-        @Schema(name = "id", example = "sws6641")
-        String membId;
+        @NotEmpty(message = "회원 이메일은 필수 항목입니다.")
+        @Schema(name = "membEmail", example = "pwj5845")
+        String membEmail;
     }
 }
