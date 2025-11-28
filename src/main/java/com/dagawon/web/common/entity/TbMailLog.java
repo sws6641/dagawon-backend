@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -54,8 +55,7 @@ public class TbMailLog extends BaseTimeEntity {
     private String errorMsg;
 
     @NotNull
-    @ColumnDefault("current_timestamp()")
     @Column(name = "SEND_DT", nullable = false)
-    private Instant sendDt;
+    private LocalDateTime sendDt;
 
 }

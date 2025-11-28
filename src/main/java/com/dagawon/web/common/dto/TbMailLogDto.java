@@ -2,7 +2,7 @@ package com.dagawon.web.common.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Value;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -11,7 +11,12 @@ import java.time.LocalDateTime;
 /**
  * DTO for {@link com.dagawon.web.common.entity.TbMailLog}
  */
-@Value
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class TbMailLogDto implements Serializable {
     LocalDateTime crtDtm;
     String crtMembNo;
@@ -37,5 +42,5 @@ public class TbMailLogDto implements Serializable {
     String sendStatusYn;
     String errorMsg;
     @NotNull
-    Instant sendDt;
+    LocalDateTime sendDt;
 }
