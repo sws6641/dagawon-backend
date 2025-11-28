@@ -40,7 +40,8 @@ public class SecurityConfig {
             "/css/**"                      , "/img/**",
             "/static/**"                   , "/resources/**",
             "/comm/code/**"                , "/comm/**",
-            "/common/**"                   , "/auth/login"
+            "/common/**"                   , "/auth/login",
+            "/auth/pwd/**"
     };
 
     @Bean
