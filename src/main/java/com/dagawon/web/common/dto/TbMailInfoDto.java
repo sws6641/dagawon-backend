@@ -5,11 +5,10 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 /**
- * DTO for {@link com.dagawon.web.common.entity.TbAuthCode}
+ * DTO for {@link com.dagawon.web.common.entity.TbMailInfo}
  */
 @Getter
 @Setter
@@ -17,25 +16,22 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TbAuthCodeDto implements Serializable {
+public class TbMailInfoDto implements Serializable {
     LocalDateTime crtDtm;
     String crtMembNo;
     LocalDateTime chgDtm;
     String chgMembNo;
-    Long authId;
+    Long mailId;
+    Long bizNo;
     @NotNull
-    @Size(max = 50)
-    String membEmail;
+    @Size(max = 2)
+    String acntCd;
     @NotNull
-    @Size(max = 20)
-    String authTypeCd;
+    @Size(max = 100)
+    String userNm;
     @NotNull
-    @Size(max = 200)
-    String authCode;
+    @Size(max = 100)
+    String email;
     @NotNull
-    Instant expireDtm;
-    Instant usedDtm;
-    Long mailLogId;
-    @NotNull
-    Character usedYn;
+    String useYn;
 }

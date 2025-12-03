@@ -18,7 +18,7 @@ public class TbAuthCode extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "AUTH_ID", nullable = false)
-    private Long id;
+    private Long authId;
 
     @Size(max = 50)
     @NotNull
