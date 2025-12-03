@@ -29,7 +29,7 @@ public abstract class BaseTimeEntity {
 
     @Column(name = "CRT_MEMB_NO",updatable = false)
     @CreatedBy
-    private String crtMembNo;
+    private Long crtMembNo;
 
     @Schema(description = "수정시간", nullable = false, example = "수정시간")
     @Column(name = "CHG_DTM")
@@ -38,6 +38,6 @@ public abstract class BaseTimeEntity {
 
     @Column(name = "CHG_MEMB_NO")
     @LastModifiedBy
-    private String chgMembNo;
+    private Long chgMembNo;
 }
 

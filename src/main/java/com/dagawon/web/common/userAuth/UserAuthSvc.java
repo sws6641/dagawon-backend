@@ -1,11 +1,10 @@
 package com.dagawon.web.common.userAuth;
 
 
+import com.dagawon.web.config.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
@@ -36,11 +35,11 @@ public class UserAuthSvc {
     }
 
     */
-/**
+    /**
      * 로그인한 사람 정보 조회
      *
      * @return : UserPrincipal 객체 (회원번호, 회원명 등 포함)
-     *//*
+     */
 
     public UserPrincipal getSessionUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -57,12 +56,11 @@ public class UserAuthSvc {
         return (UserPrincipal) principal;
     }
 
-    */
 /**
      * Static 메서드를 사용하여 세션 정보 조회
      *
      * @return : UserPrincipal 객체 (회원번호, 회원명 등 포함)
-     *//*
+     */
 
     public static UserPrincipal getStaticSession() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -81,7 +79,6 @@ public class UserAuthSvc {
 
         return (UserPrincipal) principal;
     }
-*/
 /*
 
     */

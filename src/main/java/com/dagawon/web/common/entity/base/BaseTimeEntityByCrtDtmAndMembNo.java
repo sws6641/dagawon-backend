@@ -26,5 +26,5 @@ public abstract class BaseTimeEntityByCrtDtmAndMembNo {
 
     @Column(name = "CRT_MEMB_NO",updatable = false)
     @CreatedBy
-    private String crtMembNo;
+    private Long crtMembNo;
 }
