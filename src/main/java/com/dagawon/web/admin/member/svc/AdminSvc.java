@@ -39,8 +39,8 @@ public class AdminSvc {
      * 회원가입 계정 중복 체크
      *
     **/
-    public String getDuplicateAccount(String membId, Long bizNo) throws Exception {
-        boolean exists = tbMembRepository.existsByMembIdAndBizNo_BizNo(membId, bizNo);
+    public String getDuplicateAccount(String membEmail, Long bizNo) throws Exception {
+        boolean exists = tbMembRepository.existsByMembEmailAndBizNo_BizNo(membEmail, bizNo);
         return exists ? "00" : "01";
     }
 

@@ -41,7 +41,7 @@ public class AdminCtrl {
 
     @Operation(summary = "계정 중복 체크", description = """
             [ REQUEST ]
-            - membId : gejeong
+            - membEmail : gejeong
             - bizNo : 1234567890
             
             [ RESPONSE ]
@@ -60,9 +60,9 @@ public class AdminCtrl {
             @ApiResponse(responseCode = "200", description = "회원가입 중복체크 성공", content = @Content(schema = @Schema(implementation = String.class))),
     })
     @GetMapping(value =  ADMIN_API_BASE_PATH +"/members")
-    public ResponseEntity<?> searchDuplicateAccount(@RequestParam(name = "membId") String membId, @RequestParam(name = "bizNo") Long bizNo) {
+    public ResponseEntity<?> searchDuplicateAccount(@RequestParam(name = "membEmail") String membEmail, @RequestParam(name = "bizNo") Long bizNo) {
         try{
-            String result = adminSvc.getDuplicateAccount(membId, bizNo);
+            String result = adminSvc.getDuplicateAccount(membEmail, bizNo);
 
             return switch (result) {
                 case "00" -> ResData.SUCCESS("00", "이미 존재하는 회원입니다.");
