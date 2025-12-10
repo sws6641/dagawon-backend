@@ -33,9 +33,9 @@ public class TbAuthCodeDto implements Serializable {
     @Size(max = 200)
     String authCode;
     @NotNull
-    Instant expireDtm;
-    Instant usedDtm;
+    LocalDateTime expireDtm;
+    LocalDateTime usedDtm;
     Long mailLogId;
     @NotNull
-    Character usedYn;
+    String usedYn;
 }

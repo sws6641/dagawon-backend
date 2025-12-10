@@ -41,9 +41,8 @@ public class TbMailLog extends BaseTimeEntity {
     @Column(name = "SUBJECT", nullable = false)
     private String subject;
 
-    @Size(max = 500)
-    @Column(name = "CONTENT_SUMMARY", length = 500)
-    private String contentSummary;
+    @Column(name = "CONTENT")
+    private String content;
 
     @Size(max = 10)
     @NotNull

@@ -22,6 +22,7 @@ public class TbMailInfoDto implements Serializable {
     LocalDateTime chgDtm;
     String chgMembNo;
     Long mailId;
+    @NotNull
     Long bizNo;
     @NotNull
     @Size(max = 2)

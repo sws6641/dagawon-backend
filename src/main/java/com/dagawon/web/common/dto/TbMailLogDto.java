@@ -35,8 +35,7 @@ public class TbMailLogDto implements Serializable {
     @NotNull
     @Size(max = 255)
     String subject;
-    @Size(max = 500)
-    String contentSummary;
+    String content;
     @NotNull
     @Size(max = 10)
     String sendStatusYn;

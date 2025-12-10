@@ -18,7 +18,8 @@ public class TbMailInfo extends BaseTimeEntity {
     @Column(name = "MAIL_ID", nullable = false)
     private Long mailId;
 
-    @Column(name = "BIZ_NO")
+    @NotNull
+    @Column(name = "BIZ_NO", nullable = false)
     private Long bizNo;
 
     @Size(max = 2)
@@ -37,7 +38,6 @@ public class TbMailInfo extends BaseTimeEntity {
     private String email;
 
     @NotNull
-    @ColumnDefault("'Y'")
     @Column(name = "USE_YN", nullable = false)
     private String useYn;
 
