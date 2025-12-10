@@ -22,7 +22,7 @@ public class TbAuthCodeDto implements Serializable {
     String crtMembNo;
     LocalDateTime chgDtm;
     String chgMembNo;
-    Long id;
+    Long authId;
     @NotNull
     @Size(max = 50)
     String membEmail;
@@ -33,9 +33,9 @@ public class TbAuthCodeDto implements Serializable {
     @Size(max = 200)
     String authCode;
     @NotNull
-    Instant expireDtm;
-    Instant usedDtm;
+    LocalDateTime expireDtm;
+    LocalDateTime usedDtm;
     Long mailLogId;
     @NotNull
-    Character usedYn;
+    String usedYn;
 }

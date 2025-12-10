@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -18,7 +19,7 @@ public class TbAuthCode extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "AUTH_ID", nullable = false)
-    private Long id;
+    private Long authId;
 
     @Size(max = 50)
     @NotNull
@@ -37,10 +38,10 @@ public class TbAuthCode extends BaseTimeEntity {
 
     @NotNull
     @Column(name = "EXPIRE_DTM", nullable = false)
-    private Instant expireDtm;
+    private LocalDateTime expireDtm;
 
     @Column(name = "USED_DTM")
-    private Instant usedDtm;
+    private LocalDateTime usedDtm;
 
     @Column(name = "MAIL_LOG_ID")
     private Long mailLogId;
@@ -48,6 +49,6 @@ public class TbAuthCode extends BaseTimeEntity {
     @NotNull
     @ColumnDefault("'N'")
     @Column(name = "USED_YN", nullable = false)
-    private Character usedYn;
+    private String usedYn;
 
 }

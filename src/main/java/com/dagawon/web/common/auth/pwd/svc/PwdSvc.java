@@ -3,20 +3,31 @@ package com.dagawon.web.common.auth.pwd.svc;
 
 import com.dagawon.web.common.auth.pwd.vo.PwdVo;
 import com.dagawon.web.common.commSvc.MailSvc;
+import com.dagawon.web.common.commSvc.TransactionHandler;
+import com.dagawon.web.common.dto.TbAuthCodeDto;
+import com.dagawon.web.common.dto.TbMailInfoDto;
 import com.dagawon.web.common.dto.TbMembDto;
+import com.dagawon.web.common.entity.TbMailInfo;
+import com.dagawon.web.common.entity.TbMailLog;
 import com.dagawon.web.common.entity.TbMemb;
+import com.dagawon.web.common.mapper.TbAuthCodeMapper;
+import com.dagawon.web.common.mapper.TbMailInfoMapper;
 import com.dagawon.web.common.mapper.TbMembMapper;
 import com.dagawon.web.common.repo.TbAuthCodeRepository;
+import com.dagawon.web.common.repo.TbMailInfoRepository;
 import com.dagawon.web.common.repo.TbMailLogRepository;
 import com.dagawon.web.common.repo.TbMembRepository;
+import com.dagawon.web.common.util.CodeUtil;
 import com.dagawon.web.common.util.NumberUtil;
 import com.dagawon.web.config.exception.BadRequestException;
+import com.dagawon.web.config.exception.DefaultException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 
@@ -31,7 +42,10 @@ public class PwdSvc {
     private final MailSvc mailSvc;
     private final TbMembRepository tbMembRepository;
     private final TbAuthCodeRepository tbAuthCodeRepository;
+    private final TbMailInfoRepository tbMailInfoRepository;
     private final TbMembMapper tbMembMapper;
+    private final TbAuthCodeMapper tbAuthCodeMapper;
+    private final TbMailInfoMapper tbMailInfoMapper;
 
     @Transactional
     public void sendAuthCodeMail(PwdVo.SendAuthCodeMailReq req) throws Exception {
@@ -48,10 +62,17 @@ public class PwdSvc {
             throw new BadRequestException("회원정보에 이메일이 존재하지 않습니다.");
         }
 
+        Optional<TbMailInfo> mailInfo = tbMailInfoRepository.findTop1ByAcntCdAndUseYnOrderByCrtDtmDesc("01" , "Y");
+
+        if (mailInfo.isEmpty()) {
+            throw new DefaultException("메일 발송 설정(From Email)을 찾을 수 없습니다.");
+        }
+
+        //다가원 시스템 메일 정보
+        TbMailInfoDto mailInfoDto = tbMailInfoMapper.toDto(mailInfo.get());
+
         // 인증번호 발급
-        String authNum  = NumberUtil.getRandomNumber(6);
-
-
+        String authCode  = CodeUtil.generateAuthCode(6);
 
         String subject = "[Dagawon] 비밀번호 재설정 인증번호 안내";
 
@@ -126,12 +147,22 @@ public class PwdSvc {
 
 </body>
 </html>
-""".formatted(tbMembDto.getMembEmail(), authNum);
+""".formatted(tbMembDto.getMembEmail(), authCode);
 
     // 메일 발송
-    mailSvc.sendHtmlMail(tbMembDto.getMembExtEmail(), subject, html);
+   Long mailLogId = mailSvc.sendHtmlMail(tbMembDto.getMembExtEmail(),mailInfoDto.getEmail(), subject, html);
 
-    //TODO 인증번호 테이블 저장
+   //인증번호 테이블 저장
+      TbAuthCodeDto tbAuthCodeDto = TbAuthCodeDto.builder()
+                .membEmail(tbMembDto.getMembExtEmail()) // 회원이메일
+                .authTypeCd("10") // 인증타입
+                .authCode(authCode) // 인증코드
+                .expireDtm(LocalDateTime.now().plusMinutes(30)) // 유효기간 30분 뒤
+                .mailLogId(mailLogId)
+                .usedYn("N") // 사용여부
+                .build();
+
+      tbAuthCodeRepository.save(tbAuthCodeMapper.toEntity(tbAuthCodeDto));
 
     }
 
