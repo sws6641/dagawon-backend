@@ -88,7 +88,7 @@ public class AdminSvc {
 
         // 3. DTO 생성
         TbMembDto tbMembDto = TbMembDto.builder()
-                .membNo(membNo)
+//                .membNo(membNo)
 //                .bizNo(crtMembReqVo.getBizNo())
                 .membNm(crtMembReqVo.getMembNm())
                 .membEmail(crtMembReqVo.getMembEmail())
@@ -104,12 +104,12 @@ public class AdminSvc {
         TbMemb membEntity = tbMembRepository.save(tbMemb);
 
         // 부서코드 정보 조회
-        TbDept tbDept = tbDeptRepository.findById(crtMembReqVo.getDeptCd())
+        TbDept tbDept = tbDeptRepository.findById(crtMembReqVo.getDeptNo())
                 .orElseThrow(() -> new DefaultException("부서코드 정보를 찾을 수 없습니다. "));
         TbDeptDto tbDeptDto = tbDeptMapper.toDto(tbDept);
 
         // 직급 정보 조회
-        TbPosition tbPosition = tbPositionRepository.findById(crtMembReqVo.getDeptCd())
+        TbPosition tbPosition = tbPositionRepository.findById(crtMembReqVo.getPositionNo())
                 .orElseThrow(() -> new DefaultException("직급 정보를 찾을 수 없습니다. "));
         TbPositionDto tbPositionDto = tbPositionMapper.toDto(tbPosition);
 
@@ -128,9 +128,6 @@ public class AdminSvc {
         TbMembDept membDeptEntity = tbMembDeptMapper.toEntity(deptDto);
         tbMembDeptRepository.save(membDeptEntity);
 
-
-        // TODO: 부서코드는 memb_dept 테이블에 저장해야함(dept_no) -> 부서코드 리스트는 dept 테이블에 같은 사업자로 존재
-        // TODO: 직급코드는 memb_dept 테이블에 저장해야함(position_no) -> 직급 리스트는 position 테이블에 같은 사업자로 존재
 
         // 4. 저장
 

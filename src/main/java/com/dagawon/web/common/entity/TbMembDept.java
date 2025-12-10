@@ -31,7 +31,9 @@ public class TbMembDept extends BaseTimeEntity {
     @JoinColumn(name = "POSITION_NO")
     private TbPosition positionNo;
 
+    @Size(max = 1)
     @NotNull
+    @Column(name = "MAIN_YN", nullable = false, length = 1)
     private String mainYn;
 
     @Size(max = 20)

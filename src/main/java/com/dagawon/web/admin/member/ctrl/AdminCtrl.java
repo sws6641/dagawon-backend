@@ -87,6 +87,7 @@ public class AdminCtrl {
             return ResData.SUCCESS(result);
 
         }catch (Exception e){
+            e.printStackTrace();
             return ResData.FAIL("회원정보 저장 실패" , e.getMessage());
         }
     }
