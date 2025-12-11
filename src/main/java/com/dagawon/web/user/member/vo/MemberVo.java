@@ -15,9 +15,9 @@ public class MemberVo {
     @AllArgsConstructor
     public static class GetMemberInfoVo {
         private Long membNo;
-        private String membId;
-        private String membNm;
         private String membEmail;
+        private String membNm;
+        private String membExtEmail;
         private String membPhone;
         private String roleCd;
         private String statCd;

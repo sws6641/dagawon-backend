@@ -3,6 +3,7 @@ package com.dagawon.web.common.auth.pwd.ctrl;
 import com.dagawon.web.common.auth.pwd.svc.PwdSvc;
 import com.dagawon.web.common.auth.pwd.vo.PwdVo;
 import com.dagawon.web.common.vo.ResData;
+import com.dagawon.web.config.exception.BadRequestException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,7 +14,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,6 +60,47 @@ public class PwdCtrl {
     public ResponseEntity<?> sendAuthCodeMail(@RequestBody @Valid PwdVo.SendAuthCodeMailReq req) throws Exception {
         pwdSvc.sendAuthCodeMail(req);
         return ResData.SUCCESS("00", "메일 발송 성공");
+    }
+
+    @Operation(summary = "이메일 인증코드 검증", description = """
+            [ REQUEST ]
+            - membEmail : gejeong@abc.co.kr
+            - authCode : a!23Fe1
+            
+            [ RESPONSE ]
+            
+            code
+            - 00 : 인증번호가 일치
+            - 01 : 인증코드 데이터 미존재
+            - 02 : 인증시간 만료
+            - 03 : 인증번호 불일치
+            
+            msg
+            - data > resCd의 00~99까지의 '(괄호 안)' 값
+            
+            data
+            - 00 : 사용자 이메일 존재 (회원가입 불가)
+            - 01 : 사용자 이메일 미존재 (회원가입 불가)
+            """)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "인증코드 검증 성공", content = @Content(schema = @Schema(implementation = String.class))),
+    })
+    @PostMapping(value =  PWD_API_BASE_PATH +"/verify-code")
+    public ResponseEntity<?> verifyAuthCodeMail(@RequestBody @Valid PwdVo.VerifyAuthCodeMailReq req) {
+        try{
+            String value = pwdSvc.verifyAuthCodeMail(req);
+
+            return switch (value) {
+                case "00" -> ResData.SUCCESS("", "인증번호가 일치");
+                case "01" -> ResData.SUCCESS("", "인증코드 데이터 미존재");
+                case "02" -> ResData.SUCCESS("", "인증시간 만료");
+                case "03" -> ResData.SUCCESS("", "인증번호 불일치");
+                default -> throw new BadRequestException("인증번호 검증 실패");
+            };
+
+        }catch (Exception e){
+            return ResData.FAIL("인증코드 검증 실패" , e.getMessage());
+        }
     }
 
 
