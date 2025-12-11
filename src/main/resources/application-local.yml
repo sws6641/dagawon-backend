@@ -1,17 +1,17 @@
 app:
     auth:
-        token-secret: ${app.auth.token-secret}
+        token-secret: asdfqwer1arbakstpajajakaaiziziajdhasjkAziSSakak1kahjAZZZrttofofiucfnchjduydjkajkldfhjklasdkljflkasdkl
 
 spring:
     config:
         activate:
             on-profile: local
-        import: application-secret.yml
+        #import: application-secret.yml
     datasource:
         driver-class-name: org.mariadb.jdbc.Driver
         url: jdbc:mariadb://dagawon-db.cveq0qssip2p.ap-northeast-2.rds.amazonaws.com:3306/dagawon_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-        username: ${spring.datasource.username}
-        password: ${spring.datasource.password}
+        username: admin
+        password: Gotsla12
         hikari:
             maximum-pool-size: 5
             minimum-idle: 2
