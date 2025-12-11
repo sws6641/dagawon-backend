@@ -10,5 +10,5 @@ public interface TbMembRepository extends JpaRepository<TbMemb, Long> {
 
     Optional<TbMemb> findByMembEmail(String membId);
 
-    Boolean existsByMembEmailAndBizNo_BizNo(String membId, Long bizNo);
+    Boolean existsByMembEmailAndBizNo_BizNo(String membEmail, Long bizNo);
 }

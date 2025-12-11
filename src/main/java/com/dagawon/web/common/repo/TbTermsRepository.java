@@ -1,12 +1,11 @@
 package com.dagawon.web.common.repo;
 
-import com.dagawon.web.common.entity.TbMemb;
 import com.dagawon.web.common.entity.TbTerms;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface TbTermsRepository extends JpaRepository<TbTerms, Long> {
-    Optional<TbTerms> findByTermsId(Long termsId);
+    List<TbTerms> findByUsagePlace(String usagePlace);
 
 }
