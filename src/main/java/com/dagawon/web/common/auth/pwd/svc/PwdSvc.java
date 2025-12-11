@@ -7,18 +7,16 @@ import com.dagawon.web.common.commSvc.TransactionHandler;
 import com.dagawon.web.common.dto.TbAuthCodeDto;
 import com.dagawon.web.common.dto.TbMailInfoDto;
 import com.dagawon.web.common.dto.TbMembDto;
+import com.dagawon.web.common.entity.TbAuthCode;
 import com.dagawon.web.common.entity.TbMailInfo;
-import com.dagawon.web.common.entity.TbMailLog;
 import com.dagawon.web.common.entity.TbMemb;
 import com.dagawon.web.common.mapper.TbAuthCodeMapper;
 import com.dagawon.web.common.mapper.TbMailInfoMapper;
 import com.dagawon.web.common.mapper.TbMembMapper;
 import com.dagawon.web.common.repo.TbAuthCodeRepository;
 import com.dagawon.web.common.repo.TbMailInfoRepository;
-import com.dagawon.web.common.repo.TbMailLogRepository;
 import com.dagawon.web.common.repo.TbMembRepository;
 import com.dagawon.web.common.util.CodeUtil;
-import com.dagawon.web.common.util.NumberUtil;
 import com.dagawon.web.config.exception.BadRequestException;
 import com.dagawon.web.config.exception.DefaultException;
 import lombok.RequiredArgsConstructor;
@@ -164,6 +162,29 @@ public class PwdSvc {
 
       tbAuthCodeRepository.save(tbAuthCodeMapper.toEntity(tbAuthCodeDto));
 
+    }
+
+    @Transactional
+    public String verifyAuthCodeMail(PwdVo.VerifyAuthCodeMailReq req){
+
+        Optional<TbAuthCode> tbAuthCodeOpt = tbAuthCodeRepository.findTop1ByMembEmailOrderByExpireDtmDesc(req.getMembEmail());
+
+        if (tbAuthCodeOpt.isEmpty()) return "01";
+
+        TbAuthCodeDto dto = tbAuthCodeMapper.toDto(tbAuthCodeOpt.get());
+
+        boolean isValidTime = dto.getExpireDtm().plusMinutes(1).isAfter(LocalDateTime.now());
+
+        if (!isValidTime) return "02";
+
+        boolean isCorrect = dto.getAuthCode().equals(req.getAuthCode());
+        if (!isCorrect) return "03";
+
+        dto.setUsedDtm(LocalDateTime.now());
+        dto.setUsedYn("Y");
+        tbAuthCodeRepository.save(tbAuthCodeMapper.toEntity(dto));
+
+        return "00";
     }
 
 }
