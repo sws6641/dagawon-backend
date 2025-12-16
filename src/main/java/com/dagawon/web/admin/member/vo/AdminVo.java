@@ -12,6 +12,10 @@ public class AdminVo {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class CrtMembReq {
+        @NotEmpty(message = "회원번호는 필수 항목입니다.")
+        @Schema(name = "membNo", example = "202512160001")
+        private Long membNo;
+
         @NotEmpty(message = "회원명은 필수 항목입니다.")
         @Schema(name = "membNm", example = "송원섭")
         private String membNm;

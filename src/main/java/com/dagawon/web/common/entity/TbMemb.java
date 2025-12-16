@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 @Table(name = "TB_MEMB")
 public class TbMemb extends BaseTimeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MEMB_NO", nullable = false)
     private Long membNo;
 

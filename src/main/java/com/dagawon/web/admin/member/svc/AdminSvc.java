@@ -4,8 +4,10 @@ package com.dagawon.web.admin.member.svc;
 import com.dagawon.web.admin.member.vo.AdminVo;
 import com.dagawon.web.common.dto.*;
 import com.dagawon.web.common.entity.*;
+import com.dagawon.web.common.enums.Sequence;
 import com.dagawon.web.common.mapper.*;
 import com.dagawon.web.common.repo.*;
+import com.dagawon.web.common.util.BizUtil;
 import com.dagawon.web.config.exception.DefaultException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class AdminSvc {
+    private final BizUtil bizUtil;
+
     private final TbDeptMapper tbDeptMapper;
     private final TbMembMapper tbMembMapper;
     private final TbCompanyMapper tbCompanyMapper;
@@ -72,10 +76,6 @@ public class AdminSvc {
 //            throw new IllegalArgumentException("이미 사용 중인 이메일 아이디입니다.");
 //        }
 
-        // TODO: 사번 생성은 프로시저 사용?
-        // 2. 사번 생성
-//        String empNo = generateEmpNo();
-        Long membNo = 202511240001L;
 
         // 사업자 정보 조회
         TbCompany tbCompany = tbCompanyRepository.findById(crtMembReqVo.getBizNo())
@@ -85,7 +85,7 @@ public class AdminSvc {
 
         // 3. DTO 생성
         TbMembDto tbMembDto = TbMembDto.builder()
-//                .membNo(membNo)
+                .membNo(crtMembReqVo.getMembNo())
 //                .bizNo(crtMembReqVo.getBizNo())
                 .membNm(crtMembReqVo.getMembNm())
                 .membEmail(crtMembReqVo.getMembEmail())
@@ -132,6 +132,14 @@ public class AdminSvc {
         return "";   // 생성된 사번 반환
     }
 
+    /**
+     * 회원번호 생성
+     *
+     **/
+    public Long crtMembNo() {
+        String membNo = bizUtil.getSeq(Sequence.MEMB);
+        return Long.parseLong(membNo);
+    }
 
 //    private String generateEmpNo() {
 //        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));

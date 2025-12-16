@@ -92,5 +92,20 @@ public class AdminCtrl {
         }
     }
 
+    @Operation(summary = "회원번호 생성", description = "")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "회원번호 생성 성공", content = @Content(schema = @Schema(implementation = String.class))),
+    })
+    @PostMapping(value =  ADMIN_API_BASE_PATH +"/memberNos")
+    public ResponseEntity<?> crtMembNo() {
+        try{
+            Long result = adminSvc.crtMembNo();
+            return ResData.SUCCESS(result);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResData.FAIL("회원번호 생성 실패" , e.getMessage());
+        }
+    }
 
 }
