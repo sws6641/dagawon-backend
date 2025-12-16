@@ -96,7 +96,7 @@ public class AdminCtrl {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "회원번호 생성 성공", content = @Content(schema = @Schema(implementation = String.class))),
     })
-    @PostMapping(value =  ADMIN_API_BASE_PATH +"/memberNos")
+    @PostMapping(value =  ADMIN_API_BASE_PATH +"/member-numbers")
     public ResponseEntity<?> crtMembNo() {
         try{
             Long result = adminSvc.crtMembNo();
