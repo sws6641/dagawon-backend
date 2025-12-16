@@ -31,10 +31,10 @@ public class SecurityConfig {
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     private final String[] SWAGGER = {
-            "/v3/api-docs"                    , "/swagger-ui/**", "/api/api/api-docs" ,   "/api/api/api-docs/swagger-config",
-            "/v3/api-docs/swagger-config"     , "/api-docs.yaml", "/api/api-docs" ,
-            "/swagger-resources/**"        , "/configuration/security",
-            "/webjars/**"                  , "/swagger-ui.html"
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/api-docs/**",
+            "/v3/api-docs/**"
     };
     private final String[] UI = {
             "/css/**"                      , "/img/**",
