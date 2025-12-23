@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PatchMapping;
 
 
 @Tag(name = "비빌번호 찾기", description = "비빌번호 찾기")
@@ -60,6 +61,36 @@ public class PwdCtrl {
     public ResponseEntity<?> sendAuthCodeMail(@RequestBody @Valid PwdVo.SendAuthCodeMailReq req) throws Exception {
         pwdSvc.sendAuthCodeMail(req);
         return ResData.SUCCESS("00", "메일 발송 성공");
+    }
+
+
+    @Operation(
+            summary = "비밀번호 수정 API",
+            description = """
+                비밀번호 수정 API
+                """
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "비밀번호 수정 성공 (code: 00)",
+                    content = @Content(schema = @Schema(implementation = String.class))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "요청값 누락, 회원 미존재",
+                    content = @Content(schema = @Schema(implementation = String.class))
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "서버 내부 오류",
+                    content = @Content(schema = @Schema(implementation = String.class))
+            )
+    })
+    @PatchMapping(PWD_API_BASE_PATH)
+    public ResponseEntity<?> modifyPwd(@RequestBody @Valid PwdVo.ModifyPwdReq req) throws Exception {
+        pwdSvc.ModifyPwd(req);
+        return ResData.SUCCESS("00", "비밀번호 수정 성공");
     }
 
     @Operation(summary = "이메일 인증코드 검증", description = """

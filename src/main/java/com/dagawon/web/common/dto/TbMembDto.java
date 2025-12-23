@@ -33,7 +33,7 @@ public class TbMembDto implements Serializable {
     String membNm;
     @Size(max = 100)
     String membExtEmail;
-    @Size(max = 20)
+    @Size(max = 255)
     String membPhone;
     @NotNull
     @Size(max = 255)

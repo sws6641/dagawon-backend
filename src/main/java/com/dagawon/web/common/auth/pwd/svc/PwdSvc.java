@@ -17,6 +17,7 @@ import com.dagawon.web.common.repo.TbAuthCodeRepository;
 import com.dagawon.web.common.repo.TbMailInfoRepository;
 import com.dagawon.web.common.repo.TbMembRepository;
 import com.dagawon.web.common.util.CodeUtil;
+import com.dagawon.web.common.util.encryption.HashUtil;
 import com.dagawon.web.config.exception.BadRequestException;
 import com.dagawon.web.config.exception.DefaultException;
 import lombok.RequiredArgsConstructor;
@@ -185,6 +186,31 @@ public class PwdSvc {
         tbAuthCodeRepository.save(tbAuthCodeMapper.toEntity(dto));
 
         return "00";
+    }
+
+    @Transactional
+    public void ModifyPwd(PwdVo.ModifyPwdReq req) throws Exception {
+
+        Optional<TbMemb> tbMemb = tbMembRepository.findByMembEmail(req.getMembEmail());
+
+        if (tbMemb.isEmpty()) {
+            throw new BadRequestException("회원정보가 존재하지 않습니다.");
+        }
+
+        TbMembDto tbMembDto = tbMembMapper.toDto(tbMemb.get());
+
+        // 현재 비밀번호 검증
+        // HashUtil을 사용해 입력받은 평문을 해싱합니다.
+        String encryptedCurrentPwd = HashUtil.sha256(tbMembDto.getMembPwd());
+
+        // DB에 저장된 값(이미 해싱된 값)과 비교합니다.
+        if (!encryptedCurrentPwd.equals(req.getModifyPwd())) {
+            throw new BadRequestException("같은 비밀번호는 사용할 수 없습니다.");
+        }
+
+        tbMembDto.setMembPwd(req.getModifyPwd());
+
+        tbMembRepository.save(tbMembMapper.toEntity(tbMembDto));
     }
 
 }
