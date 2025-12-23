@@ -201,12 +201,11 @@ public class PwdSvc {
 
         // 현재 비밀번호 검증
         // HashUtil을 사용해 입력받은 평문을 해싱합니다.
-        String encryptedCurrentPwd = HashUtil.sha256(tbMembDto.getMembPwd());
-
-        // DB에 저장된 값(이미 해싱된 값)과 비교합니다.
-        if (!encryptedCurrentPwd.equals(req.getModifyPwd())) {
-            throw new BadRequestException("같은 비밀번호는 사용할 수 없습니다.");
+        if (HashUtil.isMatch(req.getModifyPwd(), tbMembDto.getMembPwd())) {
+            throw new BadRequestException("기존 비밀번호와 동일한 비밀번호는 사용할 수 없습니다.");
         }
+
+
 
         tbMembDto.setMembPwd(req.getModifyPwd());
 

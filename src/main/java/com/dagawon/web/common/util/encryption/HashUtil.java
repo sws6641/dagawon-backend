@@ -23,4 +23,21 @@ public class HashUtil {
             throw new RuntimeException("SHA256 해시 실패", e);
         }
     }
+
+    /**
+     * 입력받은 평문과 DB의 해시값을 비교
+     * @param rawValue 입력받은 평문
+     * @param hashedValue DB에 저장된 해시값
+     * @return 일치 여부
+     */
+    public static boolean isMatch(String rawValue, String hashedValue) {
+        if (rawValue == null || hashedValue == null) return false;
+
+        // 입력받은 평문을 해싱하여 비교
+        String newHash = sha256(rawValue);
+
+        // MessageDigest.isEqual은 두 바이트 배열을 일정한 시간에 비교하여 보안에 더 안전합니다.
+        return MessageDigest.isEqual(newHash.getBytes(StandardCharsets.UTF_8),
+                hashedValue.getBytes(StandardCharsets.UTF_8));
+    }
 }
