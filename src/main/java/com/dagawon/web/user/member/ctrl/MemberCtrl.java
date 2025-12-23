@@ -1,5 +1,6 @@
 package com.dagawon.web.user.member.ctrl;
 
+import com.dagawon.web.common.auth.pwd.vo.PwdVo;
 import com.dagawon.web.common.util.CustomeModelMapper;
 import com.dagawon.web.common.vo.ResData;
 import com.dagawon.web.user.member.svc.MemberSvc;
@@ -9,16 +10,15 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
-//@Tag(name = "01. 회원", description = "회원 API")
+@Tag(name = "회원", description = "회원 정보")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -45,6 +45,36 @@ public class MemberCtrl {
     @GetMapping("/hello")
     public String hello() {
         return "hello";
+    }
+
+
+    @Operation(
+            summary = "사용자 회원가입 시 회원정보 수정 API",
+            description = """
+                사용자 회원가입 시 사용하는 회원정보 수정 API 입니다.
+                """
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "회원정보 수정 성공 (code: 00)",
+                    content = @Content(schema = @Schema(implementation = String.class))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "요청값 누락, 회원 미존재",
+                    content = @Content(schema = @Schema(implementation = String.class))
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "서버 내부 오류",
+                    content = @Content(schema = @Schema(implementation = String.class))
+            )
+    })
+    @PatchMapping(AUTH_API_BASE_PATH)
+    public ResponseEntity<?> modifyMember(@RequestBody @Valid MemberVo.ModifyMemberReq req) throws Exception {
+        memberSvc.ModifyMember(req);
+        return ResData.SUCCESS("00", "회원정보 수정 성공");
     }
     
 }

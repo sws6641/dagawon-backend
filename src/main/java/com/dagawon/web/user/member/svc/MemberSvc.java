@@ -1,6 +1,7 @@
 package com.dagawon.web.user.member.svc;
 
 
+import com.dagawon.web.common.auth.pwd.vo.PwdVo;
 import com.dagawon.web.common.dto.TbCompanyDto;
 import com.dagawon.web.common.dto.TbMembDto;
 import com.dagawon.web.common.entity.TbCompany;
@@ -9,12 +10,16 @@ import com.dagawon.web.common.mapper.TbCompanyMapper;
 import com.dagawon.web.common.mapper.TbMembMapper;
 import com.dagawon.web.common.repo.TbMembRepository;
 import com.dagawon.web.common.util.CustomeModelMapper;
+import com.dagawon.web.common.util.encryption.HashUtil;
+import com.dagawon.web.config.exception.BadRequestException;
 import com.dagawon.web.config.exception.DefaultException;
 import com.dagawon.web.user.member.vo.MemberVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 /**
  * 인증 서비스
@@ -58,6 +63,25 @@ public class MemberSvc {
             e.printStackTrace();
             throw new DefaultException("토큰가져오기 실패");
         }
+    }
+
+
+
+    @Transactional
+    public void ModifyMember(MemberVo.ModifyMemberReq req) throws Exception {
+
+        Optional<TbMemb> tbMemb = membRepository.findByMembEmail(req.getMembEmail());
+
+        if (tbMemb.isEmpty()) {
+            throw new BadRequestException("회원정보가 존재하지 않습니다.");
+        }
+
+        TbMembDto tbMembDto = tbMembMapper.toDto(tbMemb.get());
+        tbMembDto.setMembPwd(req.getMembPwd());
+
+        //TODO : 약관 테이블 저장 (논의 필요)
+
+        membRepository.save(tbMembMapper.toEntity(tbMembDto));
     }
 
 }
