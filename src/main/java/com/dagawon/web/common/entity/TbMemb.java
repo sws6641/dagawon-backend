@@ -1,5 +1,8 @@
 package com.dagawon.web.common.entity;
 
+import com.dagawon.web.common.annotation.Encrypted;
+import com.dagawon.web.common.converter.EncryptConverter;
+import com.dagawon.web.common.converter.HashConverter;
 import com.dagawon.web.common.entity.base.BaseTimeEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -38,12 +41,15 @@ public class TbMemb extends BaseTimeEntity {
     @Column(name = "MEMB_EXT_EMAIL", length = 100)
     private String membExtEmail;
 
-    @Size(max = 20)
-    @Column(name = "MEMB_PHONE", length = 20)
+    @Size(max = 255)
+    @Encrypted
+    @Convert(converter = EncryptConverter.class) //양방향 암호화
+    @Column(name = "MEMB_PHONE", length = 255)
     private String membPhone;
 
     @Size(max = 255)
     @NotNull
+    @Convert(converter = HashConverter.class) //단방향 암호화
     @Column(name = "MEMB_PWD", nullable = false)
     private String membPwd;
 
